@@ -25,6 +25,10 @@ const vect2D = struct {
 };
 
 const vector2DFuncs = struct {
+    pub fn magnitude(a: vect2D) f32 {
+        return @sqrt(a.x * a.x + a.y * a.y);
+    }
+    
     pub fn addVectors(a: vect2D, b: vect2D) vect2D {
         return vect2D{ .x = a.x + b.x, .y = a.y + b.y };
     }
@@ -38,16 +42,14 @@ const vector2DFuncs = struct {
         const dot: f32 = (a.x * b.x) + (a.y * b.y);
         return dot;
     }
-
+ 
     pub fn angle(a: vect2D, b: vect2D) f32 {
         const rads = false;
         // using dot(a, b) / mag(a)*mag(b)
-        const magnitude_a = a.x * a.x + a.y * a.y;
-        const magnitude_b = b.x * b.x + b.y * b.y;
-        const mag_a = @sqrt(magnitude_a);
-        const mag_b = @sqrt(magnitude_b);
-        const dot = dotProd(a, b);
-        const theta = dot / (mag_a * mag_b);
+        const mag_a: f32 = magnitude(a);
+        const mag_b: f32 = magnitude(b);
+        const dot: f32 = dotProd(a, b);
+        const theta: f32 = dot / (mag_a * mag_b);
         if (rads == true) {
             return std.math.acos(theta);
         } else {
